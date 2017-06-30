@@ -16,6 +16,7 @@ class Todo extends React.Component {
     return (
       <li>
         <button onClick={() => this.props.removeItem(item)}>X</button>
+        <button onClick={() => this.props.toggleCompleted(item)}>Toggle Completed </button>
         {this.props.item.completed ? <strike> {item.taskText} </strike> : item.taskText}
       </li>
     );

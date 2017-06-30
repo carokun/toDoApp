@@ -14,10 +14,16 @@ class TodoApp extends React.Component {
     };
     this.removeItem = this.removeItem.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.toggleCompleted = this.toggleCompleted.bind(this);
   }
 
   removeItem(item) {
     this.setState({data : (this.state.data.filter((dataItem) => (dataItem.taskText !== item.taskText)))});
+  }
+
+  toggleCompleted(item) {
+    console.log(this.state.data.map((dataItem) => ((dataItem.taskText === item.taskText)?{taskText: dataItem.taskText, completed: !dataItem.taskText}:dataItem)))
+    this.setState({data : (this.state.data.map((dataItem) => (dataItem.taskText === item.taskText)?{taskText: dataItem.taskText, completed: !dataItem.completed}:dataItem))});
   }
 
   addItem(item) {
@@ -28,11 +34,12 @@ class TodoApp extends React.Component {
     this.setState({data: dummyData});
   }
 
+
   render() {
     return (
       <div>
         <InputLine addItem = {this.addItem}/>
-        <TodoList data={this.state.data} removeItem = {this.removeItem}/>
+        <TodoList data={this.state.data} removeItem = {this.removeItem} toggleCompleted = {this.toggleCompleted}/>
       </div>
     );
   }
