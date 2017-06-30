@@ -11,10 +11,12 @@ class Todo extends React.Component {
   }
 
   render() {
+    const item = this.props.item;
+    const strike = this.props.item.completed;
     return (
       <li>
-        <button onClick={() => this.props.removeItem(this.props.item)}>X</button>
-        {this.props.item}
+        <button onClick={() => this.props.removeItem(item)}>X</button>
+        {this.props.item.completed ? <strike> {item.taskText} </strike> : item.taskText}
       </li>
     );
   }

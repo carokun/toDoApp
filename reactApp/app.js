@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import uuid from 'uuid';
-import TodoList from './TodoList.js'
+import TodoApp from './components/TodoApp.js'
 
 
-
-
-ReactDOM.render(<TodoList />, document.getElementById('root'));
+ReactDOM.render(<TodoApp />, document.getElementById('root'));
