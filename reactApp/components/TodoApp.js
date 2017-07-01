@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import uuid from 'uuid';
 import TodoList from './TodoList.js'
 import InputLine from './InputLine.js'
+import axios from 'axios'
 
-const dummyData = [{ taskText: "do while..", completed: false }, { taskText: "sleep", completed: false }, { taskText: "eat", completed: false }];
+const dbUrl = "http://localhost:3000/db";
+
+// const dummyData = [{ taskText: "do while..", completed: false }, { taskText: "sleep", completed: false }, { taskText: "eat", completed: false }];
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -17,21 +20,50 @@ class TodoApp extends React.Component {
     this.toggleCompleted = this.toggleCompleted.bind(this);
   }
 
-  removeItem(item) {
-    this.setState({data : (this.state.data.filter((dataItem) => (dataItem.taskText !== item.taskText)))});
+  toggleCompleted(item) {
+    const self = this;
+    axios.post(dbUrl + "/toggle", {item})
+    .then(function (response) {
+      self.setState({data : (self.state.data.map((dataItem) => (dataItem.taskText === item.taskText)?{taskText: dataItem.taskText, completed: !dataItem.completed}:dataItem))});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
-  toggleCompleted(item) {
-    console.log(this.state.data.map((dataItem) => ((dataItem.taskText === item.taskText)?{taskText: dataItem.taskText, completed: !dataItem.taskText}:dataItem)))
-    this.setState({data : (this.state.data.map((dataItem) => (dataItem.taskText === item.taskText)?{taskText: dataItem.taskText, completed: !dataItem.completed}:dataItem))});
+  removeItem(item) {
+    const self = this;
+    axios.post(dbUrl + "/delete", {item})
+    .then(function (response) {
+      self.setState({ data: (self.state.data.filter((dataItem) => (dataItem.taskText !== item.taskText)))});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   addItem(item) {
-    this.setState({data : (this.state.data.concat([{taskText: item, completed: false}]))});
+    const self = this;
+    // this.setState({data : (this.state.data.concat([{taskText: item, completed: false}]))});
+    axios.post(dbUrl + "/add", {item})
+    .then(function (response) {
+      self.setState({ data: self.state.data.concat(response.data)});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   componentDidMount() {
-    this.setState({data: dummyData});
+    const self = this;
+    // this.setState({data: dummyData});
+    axios.get(dbUrl + "/all")
+    .then((response) => {
+      self.setState({ data: self.state.data.concat(response.data)});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
 

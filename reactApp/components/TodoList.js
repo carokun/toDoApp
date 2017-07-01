@@ -15,7 +15,7 @@ class TodoList extends React.Component {
     return (
       <ul>
         {this.props.data.map((item) =>
-          <Todo key={uuid()} removeItem = {this.props.removeItem} toggleCompleted = {this.props.toggleCompleted} item={item}/>
+          <Todo key={item._id} removeItem = {this.props.removeItem} toggleCompleted = {this.props.toggleCompleted} item={item}/>
         )}
       </ul>
     );
