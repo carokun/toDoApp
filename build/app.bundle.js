@@ -10644,9 +10644,9 @@ var TodoApp = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(_InputLine2.default, { addItem: this.addItem }),
-        _react2.default.createElement(_TodoList2.default, { data: this.state.data, removeItem: this.removeItem, toggleCompleted: this.toggleCompleted })
+        { id: 'outer' },
+        _react2.default.createElement(_TodoList2.default, { data: this.state.data, removeItem: this.removeItem, toggleCompleted: this.toggleCompleted }),
+        _react2.default.createElement(_InputLine2.default, { addItem: this.addItem })
       );
     }
   }]);
@@ -11597,17 +11597,12 @@ var InputLine = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'inputDiv' },
         _react2.default.createElement(
           'form',
-          { onSubmit: this.handleSubmit },
-          _react2.default.createElement(
-            'label',
-            { style: { paddingRight: "10px" } },
-            'Add a ToDo:  '
-          ),
-          _react2.default.createElement('input', { type: 'text', value: this.state.newInput, onChange: this.handleChange }),
-          _react2.default.createElement('input', { type: 'submit', value: 'Add' })
+          { onSubmit: this.handleSubmit, id: 'inputForm' },
+          _react2.default.createElement('input', { className: 'inputText', type: 'text', value: this.state.newInput, onChange: this.handleChange }),
+          _react2.default.createElement('input', { className: 'inputButton', type: 'submit', value: 'Add' })
         )
       );
     }
@@ -11671,29 +11666,29 @@ var Todo = function (_React$Component) {
       var item = this.props.item;
       var strike = this.props.item.completed;
       return _react2.default.createElement(
-        'li',
-        null,
-        _react2.default.createElement(
-          'button',
-          { onClick: function onClick() {
-              return _this2.props.removeItem(item);
-            } },
-          'X'
-        ),
-        _react2.default.createElement(
-          'button',
-          { onClick: function onClick() {
-              return _this2.props.toggleCompleted(item);
-            } },
-          'Toggle Completed '
-        ),
+        'div',
+        { className: 'todoElement' },
         this.props.item.completed ? _react2.default.createElement(
           'strike',
           null,
           ' ',
           item.taskText,
           ' '
-        ) : item.taskText
+        ) : item.taskText,
+        _react2.default.createElement(
+          'button',
+          { className: 'removeItem', onClick: function onClick() {
+              return _this2.props.removeItem(item);
+            } },
+          'Delete'
+        ),
+        _react2.default.createElement(
+          'button',
+          { className: 'toggle', onClick: function onClick() {
+              return _this2.props.toggleCompleted(item);
+            } },
+          'Toggle Completed'
+        )
       );
     }
   }]);
@@ -11758,8 +11753,8 @@ var TodoList = function (_React$Component) {
       var _this2 = this;
 
       return _react2.default.createElement(
-        'ul',
-        null,
+        'div',
+        { id: 'todoList' },
         this.props.data.map(function (item) {
           return _react2.default.createElement(_Todo2.default, { key: item._id, removeItem: _this2.props.removeItem, toggleCompleted: _this2.props.toggleCompleted, item: item });
         })

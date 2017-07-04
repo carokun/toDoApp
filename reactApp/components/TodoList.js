@@ -13,11 +13,11 @@ class TodoList extends React.Component {
 
   render() {
     return (
-      <ul>
+      <div id="todoList">
         {this.props.data.map((item) =>
           <Todo key={item._id} removeItem = {this.props.removeItem} toggleCompleted = {this.props.toggleCompleted} item={item}/>
         )}
-      </ul>
+      </div>
     );
   }
 }

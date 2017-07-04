@@ -25,11 +25,10 @@ class InputLine extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label style={{paddingRight: "10px"}}>Add a ToDo:  </label>
-          <input type="text" value={this.state.newInput} onChange={this.handleChange}/>
-          <input type="submit" value="Add"/>
+      <div id="inputDiv">
+        <form onSubmit={this.handleSubmit} id="inputForm">
+          <input className="inputText" type="text" value={this.state.newInput} onChange={this.handleChange}/>
+          <input className="inputButton" type="submit" value="Add"/>
         </form>
       </div>
     );

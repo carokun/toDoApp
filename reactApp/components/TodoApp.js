@@ -69,9 +69,9 @@ class TodoApp extends React.Component {
 
   render() {
     return (
-      <div>
-        <InputLine addItem = {this.addItem}/>
+      <div id="outer">
         <TodoList data={this.state.data} removeItem = {this.removeItem} toggleCompleted = {this.toggleCompleted}/>
+        <InputLine addItem = {this.addItem}/>
       </div>
     );
   }
