@@ -10572,7 +10572,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var dbUrl = "http://localhost:3000/db";
+var dbUrl = "https://majestic-saguaro-39370.herokuapp.com/db";
 
 // const dummyData = [{ taskText: "do while..", completed: false }, { taskText: "sleep", completed: false }, { taskText: "eat", completed: false }];
 
@@ -10622,6 +10622,9 @@ var TodoApp = function (_React$Component) {
     value: function addItem(item) {
       var self = this;
       // this.setState({data : (this.state.data.concat([{taskText: item, completed: false}]))});
+      if (item === "") {
+        return;
+      }
       _axios2.default.post(dbUrl + "/add", { item: item }).then(function (response) {
         self.setState({ data: self.state.data.concat(response.data) });
       }).catch(function (error) {
@@ -11667,7 +11670,7 @@ var Todo = function (_React$Component) {
       var strike = this.props.item.completed;
       return _react2.default.createElement(
         'div',
-        { className: 'todoElement' },
+        { className: this.props.index % 2 == 0 ? "todoElementEven" : "todoElementOdd" },
         this.props.item.completed ? _react2.default.createElement(
           'strike',
           null,
@@ -11676,18 +11679,22 @@ var Todo = function (_React$Component) {
           ' '
         ) : item.taskText,
         _react2.default.createElement(
-          'button',
-          { className: 'removeItem', onClick: function onClick() {
-              return _this2.props.removeItem(item);
-            } },
-          'Delete'
-        ),
-        _react2.default.createElement(
-          'button',
-          { className: 'toggle', onClick: function onClick() {
-              return _this2.props.toggleCompleted(item);
-            } },
-          'Toggle Completed'
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { className: 'removeItem', onClick: function onClick() {
+                return _this2.props.removeItem(item);
+              } },
+            'Delete'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'toggle', onClick: function onClick() {
+                return _this2.props.toggleCompleted(item);
+              } },
+            'Toggle Completed'
+          )
         )
       );
     }
@@ -11755,8 +11762,8 @@ var TodoList = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'todoList' },
-        this.props.data.map(function (item) {
-          return _react2.default.createElement(_Todo2.default, { key: item._id, removeItem: _this2.props.removeItem, toggleCompleted: _this2.props.toggleCompleted, item: item });
+        this.props.data.map(function (item, index) {
+          return _react2.default.createElement(_Todo2.default, { key: item._id, removeItem: _this2.props.removeItem, toggleCompleted: _this2.props.toggleCompleted, index: index, item: item });
         })
       );
     }

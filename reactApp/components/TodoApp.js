@@ -5,7 +5,7 @@ import TodoList from './TodoList.js'
 import InputLine from './InputLine.js'
 import axios from 'axios'
 
-const dbUrl = "http://localhost:3000/db";
+const dbUrl = "https://majestic-saguaro-39370.herokuapp.com/db";
 
 // const dummyData = [{ taskText: "do while..", completed: false }, { taskText: "sleep", completed: false }, { taskText: "eat", completed: false }];
 
@@ -45,6 +45,9 @@ class TodoApp extends React.Component {
   addItem(item) {
     const self = this;
     // this.setState({data : (this.state.data.concat([{taskText: item, completed: false}]))});
+    if (item === "") {
+      return;
+    }
     axios.post(dbUrl + "/add", {item})
     .then(function (response) {
       self.setState({ data: self.state.data.concat(response.data)});

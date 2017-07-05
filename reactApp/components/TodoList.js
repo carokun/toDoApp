@@ -14,8 +14,8 @@ class TodoList extends React.Component {
   render() {
     return (
       <div id="todoList">
-        {this.props.data.map((item) =>
-          <Todo key={item._id} removeItem = {this.props.removeItem} toggleCompleted = {this.props.toggleCompleted} item={item}/>
+        {this.props.data.map((item, index) =>
+          <Todo key={item._id} removeItem = {this.props.removeItem} toggleCompleted = {this.props.toggleCompleted} index={index} item={item}/>
         )}
       </div>
     );
